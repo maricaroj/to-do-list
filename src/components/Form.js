@@ -45,6 +45,7 @@ const Form = ({ todos, setTodos, inputText, setInputText, setStatus }) => {
         type="text"
         value={inputText}
         className="todo-input"
+        placeholder="¿Qué debes hacer?"
       />
       <button disabled={inputText.trim().length === 0} onClick={submitTodoHandler} className="todo-button" type="submit">
         <i className="fas fa-plus-square"></i>

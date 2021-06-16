@@ -37,7 +37,7 @@ const Todo = ({ todo, setTodos, todos }) => {
   }
 
   return (
-    <div className="todo">
+    <ul className="todo">
       <li className={`todo-item ${todo.completed && 'completed'}`}>
         {todo.text}
       </li>
@@ -47,7 +47,7 @@ const Todo = ({ todo, setTodos, todos }) => {
       <button onClick={deleteHandler} className="trash-btn">
         <i className="fas fa-trash-alt"></i>
       </button>
-    </div>
+    </ul>
   );
 };
 

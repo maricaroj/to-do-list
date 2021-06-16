@@ -16,7 +16,7 @@ header {
 
 header,
 form {
-  min-height: 20vh;
+  min-height: 16vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,24 +25,43 @@ form {
 form input,
 form button {
   padding: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.8rem;
   border: none;
   background: white;
+  box-shadow:  3px 3px 3px 2px rgba(0, 0, 0, 0.2);
+  font-family: 'Do Hyeon', sans-serif;
+}
+form input {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  outline: none;
+}
+form input::placeholder {
+  color: rgba(208, 138, 240, 0.527);
+  font-size: 1.3rem;
 }
 form button {
   color: #807e7e;
-  background: #f7fffe;
+  background: #f6fffe;
   cursor: pointer;
   transition: all 0.3s ease;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 form button:hover {
   background: #5f5e5e;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 .todo-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  background-image: url(./img/fondo2.png);
+  background-size: cover;
+  background-position: top;
+  padding: 60px 0;
+  width: 30%;
+  min-height: 50vh;
+  margin: 0 auto 50px auto;
 }
 
 .todo-list {
@@ -52,16 +71,15 @@ form button:hover {
 
 .todo {
   margin: 0.5rem;
-  background: white;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: black;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   transition: all 1s ease;
 }
 .filter-todo {
   padding: 1rem;
+  border-radius: 10px;
 }
 .todo li {
   flex: 1;
@@ -72,15 +90,28 @@ form button:hover {
   background: #4b4a4a;
   color: white;
   border: none;
-  padding: 1rem;
+  padding: .5rem .6rem; 
+  margin: 2px;
   cursor: pointer;
   font-size: 1rem;
+  border-radius: 50px;
+
 }
 .complete-btn {
   background: rgb(11, 212, 128);
+  margin-left: 50px;
+}
+.complete-btn:hover {
+  background-color: rgb(0, 180, 105);
 }
 .btn-change{
-  background-color: rosybrown;
+  background-color: rgb(196, 59, 214);
+}
+.btn-change:hover{
+  background-color: rgb(168, 40, 185);
+}
+.trash-btn:hover {
+  background-color: rgb(126, 117, 117);
 }
 .todo-item {
   padding: 0rem 0.5rem;
@@ -118,13 +149,15 @@ select {
   margin: 1rem;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
+  box-shadow:  3px 3px 3px 2px rgba(0, 0, 0, 0.2);
 }
 select {
-  color: #424141;
   font-family: 'Do Hyeon', sans-serif;
   font-size: 19px;
   cursor: pointer;
   width: 12rem;
+  
 }
 /* Arrow */
 .select::after {
@@ -133,17 +166,13 @@ select {
   top: 0;
   right: 0;
   padding: 1rem;
-  background: #b6b4b4;
+  background: #f6fffe;
+  color: #b6b4b4;
   cursor: pointer;
   pointer-events: none;
 }
 
-.select:hover{
-  background: #6b6a6a;
+.select:hover::after{
+  background: #5f5e5e;
+  color: white;
 }
-/* Transition */
-/*
-.select:hover::after {
-  transform: scale(1.5);
-}
-*/
