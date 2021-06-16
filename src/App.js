@@ -3,6 +3,7 @@ import "./App.css";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
+import { db } from "./firebase-config";
 
 function App() {
   const [inputText, setInputText] = useState("");
@@ -10,18 +11,30 @@ function App() {
   const [status, setStatus] = useState("all");
   const [filteredTodos, setfilteredTodos] = useState([]);
 
+  const traerDesdeFirebase = () => {
+    db.collection("todos").get().then((querySnapshot) => {
+      const docs = [];
+      querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          docs.push({...doc.data(), id: doc.id})
+      });
+      setTodos(docs)
+  });
+  }
+
   useEffect(() =>{
-    const getLocalTodos = () => {
-      if(localStorage.getItem('todos') == null){
-        localStorage.setItem('todos', JSON.stringify(todos))
-      }else{
-        const todoLocal = JSON.parse(localStorage.getItem('todos'))
-        setTodos(todoLocal)
-      }
-    }
-    getLocalTodos();
+    // const getLocalTodos = () => {
+    //   if(localStorage.getItem('todos') == null){
+    //     localStorage.setItem('todos', JSON.stringify(todos))
+    //   }else{
+    //     const todoLocal = JSON.parse(localStorage.getItem('todos'))
+    //     setTodos(todoLocal)
+    //   }
+    // }
+    // getLocalTodos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    traerDesdeFirebase();
+  },[todos])
 
   useEffect(() => {
     const filteredHandler = () => {
