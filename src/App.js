@@ -1,40 +1,28 @@
 import { useState, useEffect } from "react";
+import { db } from "./firebase-config";
 import "./App.css";
 
 import Form from "./components/Form";
 import TodoList from "./components/TodoList";
-import { db } from "./firebase-config";
 
 function App() {
   const [inputText, setInputText] = useState("");
   const [todos, setTodos] = useState([]);
   const [status, setStatus] = useState("all");
   const [filteredTodos, setfilteredTodos] = useState([]);
+  const [user, setUser] = useState("");
 
   const traerDesdeFirebase = () => {
-    db.collection("todos").get().then((querySnapshot) => {
+    db.collection("todos").onSnapshot((querySnapshot) => {
       const docs = [];
       querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          docs.push({...doc.data(), id: doc.id})
+        docs.push({ ...doc.data(), id: doc.id });
       });
-      setTodos(docs)
-  });
-  }
+      setTodos(docs);
+    });
+  };
 
-  useEffect(() =>{
-    // const getLocalTodos = () => {
-    //   if(localStorage.getItem('todos') == null){
-    //     localStorage.setItem('todos', JSON.stringify(todos))
-    //   }else{
-    //     const todoLocal = JSON.parse(localStorage.getItem('todos'))
-    //     setTodos(todoLocal)
-    //   }
-    // }
-    // getLocalTodos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    traerDesdeFirebase();
-  },[todos])
+  useEffect(traerDesdeFirebase, []);
 
   useEffect(() => {
     const filteredHandler = () => {
@@ -49,18 +37,26 @@ function App() {
           setfilteredTodos(todos);
       }
     };
-    const saveLocalTodos = () => {
-      localStorage.setItem('todos', JSON.stringify(todos))
-    }
-    filteredHandler();
-    saveLocalTodos();
-  },[todos, status])
 
- 
+    filteredHandler();
+  }, [todos, status]);
+
+  const getLocalUser = () => {
+    if (localStorage.getItem("user") == null) {
+      const nombreUsuario = prompt("Ingresa tu nombre");
+      setUser(nombreUsuario);
+      localStorage.setItem("user", JSON.stringify(nombreUsuario));
+    } else {
+      const todoLocal = JSON.parse(localStorage.getItem("user"));
+      setUser(todoLocal);
+    }
+  };
+  useEffect(getLocalUser, []);
+
   return (
     <div>
       <header>
-        <h1>ToDo List</h1>
+        <h1>{user && user + "'s"} ToDo List</h1>
       </header>
       <Form
         todos={todos}
